@@ -1,0 +1,440 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+// bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+// endbower
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+body {
+    padding: 0
+}
+
+[role="translation-ui"] {
+    padding-bottom:30px;
+}
+
+[role="landing"] {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  color: #595d66;
+  font-size: 18px;
+  line-height: 27px;
+
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+    pre {
+      padding: 9.5px;
+      margin: 0 0 10px;
+    }
+
+    a {
+      color: #eb6969;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      width: 1047px;
+      margin: auto;
+    }
+    .btn {
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 34px;
+      display: inline-block;
+      color: #ffffff;
+      background-color: #eb6969;
+      text-decoration: none;
+      padding: 0 19px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      transition: transform 0.1s ease;
+    }
+    .btn:hover {
+      color: #ffffff;
+      transform: scale(1.02);
+      box-shadow: 1px 2px rgba(0,0,0,0.4)
+    }
+    .btn_big {
+      font-size: 16px;
+      line-height: 55px;
+      padding: 0 49px;
+    }
+    header {
+      position: relative;
+    }
+    header a:hover {
+      text-decoration: none !important;
+    }
+    nav {
+      height: 120px;
+      text-align: right;
+      position: relative;
+      padding-top: 42px;
+      box-sizing: border-box;
+    }
+    nav a {
+      display: inline-block;
+      margin-left: 26px;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: #918e99;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    #logo {
+      position: absolute;
+      left: 0;
+      top: 31px;
+      width: 155px;
+      height: 60px;
+      margin: 0px;
+      background: url(../images/jitt-logo.jpg) 0 0 no-repeat;
+      background-size: cover;
+      text-indent: 9999px;
+      overflow: hidden;
+    }
+    header > section {
+      height: 380px;
+      background: url(../images/header-bg-grid.png) center 53px,
+                    url(../images/header-bg-color.png);
+      text-align: center;
+      color: #ffffff;
+    }
+    h1{
+      font-size: 42px;
+      font-weight: 300;
+      width: 640px;
+      margin: 87px auto 0;
+      display: inline-block;
+      text-transform: uppercase;
+    }
+    h2 {
+     font-size: 28px;
+     font-weight: 300;
+     margin-bottom: 47px;
+     margin-top: 10px;
+    }
+    h3 {
+      color: #47434a;
+      text-transform: uppercase;
+      font-size: 30px;
+      font-weight: 500;
+      margin-top: 0;
+      margin-bottom: 31px;
+    }
+    ol ul {
+      margin-left: 20px;
+    }
+
+    main > section.container {
+      position: relative;
+      padding-top: 54px;
+      margin-top: 20px !important;
+      padding-bottom: 54px;
+      padding-left: 50px;
+      box-sizing: border-box;
+    }
+    main.columns > section.container {
+      padding-left: 0;
+    }
+    section h3:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 56px;
+      width: 4px;
+      height: 21px;
+      background-color: #eb3447;
+    }
+    main.odd {
+      background-color: #5085CB;
+      color: #ffffff;
+      padding: 1px 0 20px;
+    }
+    main.odd h3 {
+      color: #ffffff;
+    }
+    main.odd h3:after {
+      background-color: #ffffff;
+    }
+    main.odd a {
+      color: rgba(255,255,255,0.5);
+    }
+
+    .columns {
+      background: #f4f4f4;
+    }
+    .columns section{
+      padding-left: 0;
+      padding-bottom: 34px;
+    }
+    .columns h3 {
+      margin-left: 50px;
+    }
+    column {
+      float: left;
+      height: 120px;
+      width: calc(91%/3);
+      margin-right: 46px;
+      padding: 30px 0;
+    }
+    column:last-child {
+      margin-right: 0;
+    }
+    .columns column h3 {
+      font-size: 21px;
+      margin-left: 0;
+      margin-bottom: 10px;
+    }
+    .columns column h3:after {
+      display: none;
+    }
+
+    main[name="community"] {
+      padding: 40px 0px;
+    }
+    main[name="community"] img {
+      float: right;
+      position: relative;
+      top: -80px;
+    }
+    main[name="community"] p{
+      padding-right: 0;
+    }
+
+}
+
+[role="jitt-logo"] {
+    height: 34px;
+    margin-top: -10px;
+}
+.resource {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 10px;
+
+  /* Make the masthead heading the same height as the navigation */
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+  }
+}
+
+.score-indication {
+    color:black;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+
+  .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+  }
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+
+  p + h4 {
+    margin-top: 28px;
+  }
+}
+
+.progress-footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    height: 40px;
+    background: white;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    left: 0;
+    z-index: 100 !important;
+    &.done {
+        height: 116px;
+    }
+}
+
+div[role="translate"] {
+  .list-group-item {
+    padding-right: 24px;
+  }
+
+  .list-group-item.active {
+    color: inherit;
+    background-color: #fff;
+    border-color: #ddd;
+
+    [role="selection-icon"] {
+      color: green;
+    }
+  }
+
+  [role="selection-icon"] {
+    color: #ccc;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -5px;
+  }
+
+  .panel {
+    background-color: #F5F5F5;
+    padding: 4px 15px;
+
+    .panel-heading {
+      border: 0;
+      padding: 0;
+      position: relative;
+
+      h4 {
+        margin-bottom: 3px;
+        padding-right: 14px;
+      }
+
+      [role="desc"] {
+        color: #999;
+
+        span {
+          text-transform: lowercase;
+        }
+      }
+    }
+
+    .panel-body {
+      [role="own"] {
+        padding: 2px;
+
+        textarea:not(:focus) {
+          height: 36px;
+          border: 0;
+          box-shadow: 0 0;
+          border-radius: 0;
+        }
+      }
+
+      .collapsing {
+        -webkit-transition: none;
+        transition: none;
+      }
+
+      [role="more-actions"] {
+        a {
+          color: #9D9D9D;
+          text-decoration: underline;
+        }
+        .list-group {
+          margin: 10px 0 0;
+        }
+      }
+    }
+  }
+}
+
+// Loading
+div[role="loading"] {
+  width: 50px;
+  height: 50px;
+  min-height: 50px;
+  margin: auto;
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  &:before {
+    content: '';
+    width: 50px;
+    height: 5px;
+    background: #000;
+    opacity: 0.1;
+    position: absolute;
+    top: 59px;
+    left: 0;
+    border-radius: 50%;
+    animation: shadow .5s linear infinite;
+  }
+  &:after {
+    content: '';
+    width: 50px;
+    height: 50px;
+        background: #EB6969;
+    animation: animate .5s linear infinite;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 3px;
+  }
+}
+
+@keyframes animate {
+  17% {
+    border-bottom-right-radius: 3px;
+  }
+  25% {
+    transform: translateY(9px) rotate(22.5deg);
+  }
+  50% {
+    transform: translateY(18px) scale(1, .9) rotate(45deg);
+    border-bottom-right-radius: 40px;
+  }
+  75% {
+    transform: translateY(9px) rotate(67.5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(90deg);
+  }
+}
+
+
+@keyframes shadow {
+  0%, 100% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.2, 1);
+  }
+}

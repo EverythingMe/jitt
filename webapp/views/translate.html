@@ -1,0 +1,73 @@
+<div ng-if="translate.new_user" class="jumbotron">
+  <h1>Hello there!</h1>
+  <p class="lead">
+    Help us translate the following phrases to {{ translate.localeNames(translate.locale) }}
+  </p>
+</div>
+<div class="container" role="translation-ui">
+    <h3>Choose the best translation<br/> - or -<br/>Suggest a new one</h3>
+    <div role="loading" ng-if="translate.resources === null"></div>
+    <br/>
+    <div ng-repeat="res in translate.resources" ng-controller="ResourceController as resCtrl" role="translate">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>{{ res.original }}</h4>
+                <span role="desc" ng-hide="res.context == null || res.context.trim().length == 0">Appears in: <span>{{ res.context }}</span></span>
+            </div>
+            <div class="panel-body">
+                <h5 ng-show="res.suggestions.length>0" class="row">Choose:</h5>
+                <h5 ng-hide="res.suggestions.length>0" class="row">How would you say it in {{ translate.localeNames(translate.locale) }}?</h5>
+                <div class="list-group row">
+                    <div class="list-group-item" ng-class="{'active':res.voted===sugg}" ng-repeat="sugg in res.suggestions" ng-click="resCtrl.vote(sugg)">
+                        {{ sugg }} <span class="glyphicon glyphicon-ok" role="selection-icon"></span>
+                    </div>
+                    <div class="list-group-item" role="own" ng-class="{'active':res.own_suggestion}">
+                        <textarea class="form-control" ng-model="res.suggested"
+                              ng-change="resCtrl.suggest(res.suggested)"
+                              ng-focus="resCtrl.suggest(res.suggested)"
+                              placeholder="suggest a translation"></textarea>
+                        <span class="glyphicon glyphicon-ok" role="selection-icon"></span>
+                    </div>
+                </div>
+                <div class="row" role="more-actions">
+                    <a data-toggle="collapse" role="button" data-target="#skip-{{ $index }}" aria-expanded="false" aria-controls="skip">skip this item</a>
+                    <div class="list-group collapse" id="skip-{{ $index }}">
+                        <div class="list-group-item" ng-click="resCtrl.unclear()" ng-class="{'active':res.error==='unclear'}">
+                            Text is unclear <span class="glyphicon glyphicon-ok" role="selection-icon"></span>
+                        </div>
+                        <div class="list-group-item" ng-click="resCtrl.skip()" ng-class="{'active':res.error==='skip'}">
+                            Not sure <span class="glyphicon glyphicon-ok" role="selection-icon"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="progress-footer" ng-class="{done:done = (translate.completed === translate.amount)}">
+        <div class="progress" ng-hide="done">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{ percent = ((100 * translate.completed) / translate.amount) }}" aria-valuemin="0" aria-valuemax="100" ng-class="{'progress-bar-success':done,'progress-bar-striped':!done}" style="width: {{percent}}%;" >
+                <div class="indication">{{ translate.completed }} / {{ translate.amount }}</div>
+            </div>
+        </div>
+        <div class="indication" ng-show="done &amp;&amp; !translate.saved">
+            <div class="alert alert-success">
+                <h4><center>Great Job!</center></h4>
+                <div>
+                    <center>
+                        <input type="submit" ng-click="translate.save()" value="Save your work" class="btn btn-success" />
+                    </center>
+                </div>
+            </div>
+        </div>
+        <div class="indication" ng-show="translate.saved">
+            <div class="alert alert-success">
+                <h4><center>Want to help some more?</center></h4>
+                <div>
+                    <center>
+                        <input type="submit" ng-click="translate.restart()" value="Yes!" class="btn btn-success" />
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

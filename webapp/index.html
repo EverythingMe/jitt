@@ -1,0 +1,77 @@
+<!doctype html>
+<html ng-app="jittv2App">
+  <head>
+    <meta charset="utf-8">
+    <title>JITT</title>
+    <link rel="shortcut icon" href="/favicon.ico?v=3" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?v=3" type="image/x-icon">
+    <meta name="description" content="">
+    <meta ng-if="!landing" name="viewport" content="width=device-width">
+    <meta ng-if="landing" name="viewport" content="width=1100">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body>
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div ng-view="">
+        <div role="loading"></div>
+    </div>
+
+    <div class="footer">
+      <div class="container">
+        <p>Built with <span class="glyphicon glyphicon-heart"></span> by EverythingMe</p>
+      </div>
+    </div>
+
+     <script>
+       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-16876190-44', 'auto');
+    </script>
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/locales.js"></script>
+        <script src="scripts/countries.js"></script>
+        <script src="scripts/controllers/translate-start.js"></script>
+        <script src="scripts/controllers/translate.js"></script>
+        <script src="scripts/controllers/translate-done.js"></script>
+        <script src="scripts/controllers/resource.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/my-apps.js"></script>
+        <script src="scripts/controllers/app-res.js"></script>
+        <script src="scripts/controllers/app-users.js"></script>
+        <script src="scripts/controllers/app-status.js"></script>
+        <script src="scripts/services.js"></script>
+        <!-- endbuild -->
+</body>
+</html>

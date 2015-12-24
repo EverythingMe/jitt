@@ -1,0 +1,135 @@
+<div role="landing">
+ <header>
+   <nav class="container">
+     <a href="/" id="logo">Jitt</a>
+     <span ng-show="main.login.loggedin">{{main.login.nick}}</span>
+     <a ng-show="main.login.loggedin" ng-href="#/my-apps" class="btn"><span class="glyphicon glyphicon-list"></span> My Apps</a>
+     <a ng-show="main.login.loggedin" ng-href="{{main.login.url}}" class="btn"><span class="glyphicon glyphicon-log-out"></span> Log Out</a>
+     <a ng-hide="main.login.loggedin" ng-href="{{main.login.url}}" class="btn"><span class="glyphicon glyphicon-log-in"></span> Log In</a>
+   </nav>
+   <section>
+     <div class="container">
+       <h1></h1>
+       <h2>Tap into the hidden power of your user-base and get their help
+        <br />in continuously localizing your app</h2>
+       <a ng-show="main.login.loggedin" href="#/my-apps" class="btn btn_big">Get Started</a>
+       <a ng-hide="main.login.loggedin" ng-click="main.getstarted()" class="btn btn_big">Get Started</a>
+     </div>
+   </section>
+ </header>
+
+ <main>
+   <section class="container">
+     <h3>What is Jitt?</h3>
+     <p>
+       JITT is a crowd-sourcing oriented localization service for Andorid applications. It holds all your resources along with their translations, and allows your users to suggest better translations or vote on current ones.
+     </p>
+   </section>
+ </main>
+
+ <main class="columns">
+   <section class="container clearfix">
+     <h3>The Flow</h3>
+     <column>
+       <h3>Upload strings</h3>
+       <p>
+         Use the cli tool to upload your Android app strings to jitt service
+       </p>
+     </column>
+
+     <column>
+       <h3>Ask for users' help</h3>
+       <p>
+         Send users to the translation interface and let it work its magic
+       </p>
+     </column>
+
+     <column>
+       <h3>Pull translations</h3>
+       <p>
+         Download and merge the newly provided translations into your app codebase
+       </p>
+     </column>
+   </section>
+ </main>
+
+ <main>
+   <section class="container">
+     <h3>Why localize?</h3>
+     <p>
+       The Android ecosystem is an amazing one, growing faster than anything before. A big part of this growth is coming from many countries with various languages. It has been proven that localizing your app can help you attract and retain new audiences.
+     </p>
+   </section>
+ </main>
+
+ <main class="odd">
+   <section class="container">
+     <h3>For developers, by developers</h3>
+     <p>
+       With decades of collective mobie apps development under our belts, coupled with religiously practicing weekly releases, we found ourselves building tools to bridge gaps and allow us to move faster. Releasing weekly means we’ve gotten a lot of our funnel automated and tighltly integrated. So when we approached Jitt it was with the goal of getting our user-based localization automatically integrated into our development and release process.
+     </p>
+   </section>
+ </main>
+
+ <main name="getstarted">
+   <section class="container">
+     <h3>Quick Start</h3>
+     <ol>
+       <li ng-if="!main.login.loggedin"><a ng-href="{{main.login.url}}">Log In to JITT</a></li>
+       <li>Create a new App and get an <strong>API Key</strong> and <strong>API Secret</strong></li>
+       <li>
+         Download <strong>jitter</strong> - JITT's command line interface via <code>pip install jitter</code><br/>
+       </li>
+       <li>
+         Upload your current original &amp; translated strings to JITT.<br />
+         <small>Just point <strong>jitter</strong> to the root of your Android project and let it do the rest.</small>
+       </li>
+       <li>
+           Send your users to their personal translation link.<br/>
+           <small>You can create these offline, and send them to your users via push messages, or you can place it in your app.</small>
+       </li>
+       <li>
+           Users will be provided with a few of your strings to translate to their language.
+       </li>
+       <li>
+           At any point, you can pull updated translations and merge them back ro your work tree.<br/>
+           <small>Just point <strong>jitter</strong> to the root of your Android project and it'll take it from there.</small>
+       </li>
+     </ol><br/>
+     For detailed instructions, head over to <a href="https://github.com/EverythingMe/jitter#translation-flow" target="_blank">jitter docs</a> - it's as easy as pie.
+   </section>
+ </main>
+
+ <main class="odd">
+   <section class="container">
+     <h3>Philosophy baked in</h3>
+     <p>
+       We’ve been localizing our app to 40 languages, and we’ve done that with a one-woman localization team. We managed to do that because we approached it the same way we approach all unsolvable problems - tools, automation and community.
+     </p>
+     <br/>
+     <h4><strong>Not all strings were born equal</strong></h4>
+     <br/>
+     <p>
+       We’ve changed how we relate to our app's strings - splitting them into 3 different groups:<br/>
+       <li>Priority 1 - Strings that appear in product on-boarding and first impression<br/>
+       <li>Priority 2 - Strings that are one tap away from P1<br/>
+       <li>Priority 3 - Peripheral strings
+     </p>
+     <br/>
+     <small>We acutually add a <i>priority="1"</i> attribute to our strings.xml file to help jitt priotize strings and reports localization status.</small>
+   </section>
+ </main>
+</div>
+<!--
+ <main name="community">
+   <section class="container">
+     <h3>Join the Community</h3>
+     <img src="/images/everythingme_community.jpg" alt="EverythingMe Community" />
+     <p>
+       Github <a href="https://github.com/EverythingMe/magneto" target="_blank">EverythingMe/magneto</a> <br />
+       Discussion <a href="https://groups.google.com/forum/#!forum/magneto-group" target="_blank">Magneto-group</a> <br />
+       Twitter <a href="https://twitter.com/MagnetoTesting" target="_blank">@MagnetoTesting</a>
+     </p>
+   </section>
+ </main>
+ -->

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Material Design Lite</title>
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.green-amber.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<style>
+  .mdl-card {
+      width: 512p;
+  }
+  .mdl-textfield {
+      width: 100%;
+  }
+  .helpus-card-wide.mdl-card {
+    background: green;
+  }
+  .helpus-card-wide > .mdl-card__title {
+    color: white;
+    height: 176px;
+  }
+  .helpus-card-wide .mdl-button {
+      color: lightgray;
+  }
+  .resource-card-wide > .mdl-card__title {
+    color: black;
+    height: 76px;
+    background: white;
+  }
+  .helpus-card-wide > .mdl-card__menu {
+    color: #fff;
+  }
+  .mdl-icon-toggle > i.mdl-icon-toggle__label {
+      color: lightgray;
+  }
+  .mdl-icon-toggle.is-checked > i.mdl-icon-toggle__label {
+      color: green;
+  }
+  .container {
+      margin-left:auto;
+      margin-right:auto;
+      width: 90%;
+  }
+
+  .mdl-card {
+      margin-bottom:20px;
+  }
+</style>
+</head>
+<body>
+    <div class='container'>
+        <div class="mdl-card mdl-shadow--4dp helpus-card-wide">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Can you help us translate EverythingMe into Spanish?</h2>
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+              <a id="start" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                Get Started
+              </a>
+              <a id="no-thanks" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                No Thanks
+              </a>
+          </div>
+        </div>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.1.2/mustache.js"></script>
+
+    <script id="done-card-template" type="text/html">
+        <div class="mdl-card mdl-shadow--4dp helpus-card-wide">
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Thank You!</h2>
+          </div>
+        </div>
+    </script>
+    <script id="done-template" type="text/html">
+        <button id="done" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
+          Done
+        </button>
+    </script>
+    <script id="sugg-template" type="text/html">
+        <div class="mdl-card mdl-shadow--4dp resource-card-wide">
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">{{original}}</h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+              <table class="mdl-data-table mdl-js-data-table mdl-shadow--0dp">
+                <tbody>
+                  {{#suggestions}}
+                  <tr>
+                    <td class="mdl-data-table__cell--non-numeric">{{text}}</td>
+                    <td>
+                        <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect toggle-{{id}}" for="icon-toggle-{{id}}-{{i}}" data-text="{{text}}">
+                          <input type="checkbox" id="icon-toggle-{{id}}-{{i}}" class="mdl-icon-toggle__input" />
+                          <i class="mdl-icon-toggle__label material-icons">done</i>
+                        </label>
+                    </td>
+                  </tr>
+                  {{/suggestions}}
+                  <tr>
+                    <td>
+                        <div class="mdl-textfield mdl-js-textfield suggest-{{id}}">
+                            <input class="mdl-textfield__input" type="text" id="suggest-{{id}}" />
+                            <label class="mdl-textfield__label" for="suggest-{{id}}">Suggest your own...</label>
+                        </div>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div>
+              </div>
+
+          </div>
+        </div>
+    </script>
+    <script>
+    var clickedOnce = false;
+    $("#start").click( function() {
+            $("#start").toggleClass('disabled',true);
+            if ( clickedOnce ) {
+                return;
+            }
+            clickedOnce = true;
+            $.get('/api/translate?username=mushon&amount=5&locale=he',
+                  function(data) {
+                      var template = $("#sugg-template").html();
+                      for ( datum of data ) {
+                          console.log(datum);
+                          var _suggestions = datum.suggestions;
+                          var suggestions = [];
+                          var resource_id = datum.id;
+                          for ( i in _suggestions ) {
+                              suggestions.push({i:i,text:_suggestions[i],id:resource_id});
+                          }
+                          datum.suggestions = suggestions;
+                          var html = Mustache.render(template,datum);
+                          el = $(html);
+                          $(".container").append(el);
+                          $(".container .toggle-"+resource_id).on('change',(function (_resource_id) {
+                              var resource_id = _resource_id;
+                              return function(e) {
+                                  var parent_el = $(e.target).parent();
+                                  var id = parent_el.attr('for');
+                                  if (parent_el.hasClass('is-checked')) {
+                                      $(".container .toggle-"+resource_id).each(function(i,e) {
+                                          var el = $(e);
+                                          if ( el.attr('for') !== id ) {
+                                              if (el.hasClass('is-checked')) {
+                                                  setTimeout( function() { el.click(); }, i*500 );
+                                              }
+                                          }
+                                      });
+                                  }
+                              }
+                          })(resource_id));
+                          $(".container .suggest-"+resource_id).on('click',(function (_resource_id) {
+                              var resource_id = _resource_id;
+                              return function(e) {
+                                  $(".container .is-checked.toggle-"+resource_id).click();
+                              }
+                          })(resource_id));
+                      }
+                      var done = $("#done-template").html();
+                      $(".container").append(done);
+                      $("#done").click( function() {
+                          votes = [];
+                          for ( datum of data ) {
+                              var id = datum.id;
+                              var text = $(".toggle-"+id+".is-checked").attr('data-text');
+                              if ( !text || text.length == 0 ) {
+                                  text = $("#suggest-"+id).val();
+                              }
+                              if ( text.length != 0 ) {
+                                  votes.push({
+                                      text:text,
+                                      locale:'es',
+                                      resource_id:id
+                                  })
+                              }
+                          }
+                          var params = {
+                              'username':'mushon',
+                              'votes':JSON.stringify(votes)
+                          }
+                          $.post('/api/translate',params,function() {
+                             console.log('success!');
+                             var doneCard = $("#done-card-template").html();
+                             $(".container").html(doneCard);
+                          });
+                      });
+                      componentHandler.upgradeDom();
+                  },"json");
+    });
+    </script>
+</body>

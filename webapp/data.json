@@ -1,0 +1,42 @@
+[
+  {
+    "context": " Application copyright ", 
+    "id": "application_copyright", 
+    "suggestions": [
+      "\\u00A9 \u05db\u05dc \u05d4\u05d6\u05db\u05d5\u05d9\u05d5\u05ea \u05e9\u05de\u05d5\u05e8\u05d5\u05ea \u05dc DoAT Media \u05d1\u05e2\\\"\u05de 2012\u20132015"
+    ], 
+    "original": "\\u00A9 All rights reserved to DoAT Media Ltd. 2012\u20132015"
+  }, 
+  {
+    "context": "             ", 
+    "id": "preferences_action_no_action", 
+    "suggestions": [
+      "\u05dc\u05dc\u05d0 \u05e4\u05e2\u05d5\u05dc\u05d4"
+    ], 
+    "original": "No Action"
+  }, 
+  {
+    "context": " Folder translations ", 
+    "id": "experience_title_movies_tv", 
+    "suggestions": [
+      "\u05e1\u05e8\u05d8\u05d9\u05dd \u05d5\u05d8\u05dc\u05d5\u05d5\u05d9\u05d6\u05d9\u05d4"
+    ], 
+    "original": "Movies & TV"
+  }, 
+  {
+    "context": null, 
+    "id": "wallpapers_background_search_hint", 
+    "suggestions": [
+      "\u05d7\u05e4\u05e9 \u05e8\u05e7\u05e2\u05d9\u05dd"
+    ], 
+    "original": "Search Backgrounds"
+  }, 
+  {
+    "context": " Cards ", 
+    "id": "card_event_alert_event_attendees", 
+    "suggestions": [
+      "\u05de\u05e9\u05ea\u05ea\u05e4\u05d9\u05dd"
+    ], 
+    "original": "Participants"
+  }
+]

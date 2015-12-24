@@ -1,0 +1,7 @@
+cron:
+- description: periodic user refresh
+  url: /tasks/rescore/user-periodic
+  schedule: every 30 mins
+- description: periodic resource refresh
+  url: /tasks/rescore/resource-periodic
+  schedule: every 30 mins

@@ -1,0 +1,100 @@
+<div class="container">
+    <div class="header">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="#/">
+                <img role="jitt-logo" src="images/jitt-logo.png"/>
+            </a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="js-navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#/resources/{{appusers.apikey}}">Resources</a></li>
+                <li class="active"><a>Users</a></li>
+                <li><a href="#/status/{{appusers.apikey}}">Status</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <a href="#/my-apps">&lt; Back to My Apps</a> <h3>{{appusers.app.name}}</h3>
+    </div>
+
+    <div class="row">
+        <div class="row" ng-show="appusers.locales !== null &amp;&amp; appusers.locales.length>0">
+            <div class="form-inline">
+                <label>Selected Locale:</label><span> <strong>{{ appusers.selectedLocale.engname }}</strong> ({{ (100 * appusers.selectedLocale.num) / appusers.num | number:0 }}% translated)</span>
+                <span class="dropdown">
+                    <button class="btn btn-default btn-xs dropdown-toggle" type="button" id="localeMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="localeMenu">
+                        <li ng-repeat="locale in appusers.locales" ng-class="{'active':(locale === appusers.selectedLocale)}">
+                            <a role="button" ng-click="appusers.setLocale(locale)">
+                                {{ locale.engname }}
+                                <small>({{ (100 * locale.num) / appusers.num | number:0 }}%)</small>
+                            </a>
+                        </li>
+                    </ul>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-inline">
+                <label>Search users: </label>
+                <div class="form-group">
+                    <input type="search" class="form-control input-sm" ng-model="appusers.filter"/>
+                </div>
+            </div>
+        </div>
+        <hr/>
+
+        <div class="row">
+            <table class="table table-striped table-condensed table-responsive">
+                <thead>
+                    <th class="col-lg-4" ng-click="appusers.setOrder('userid')">User Id</th>
+                    <th class="col-lg-2" ng-click="appusers.setOrder('-last_activity')">Created / <br/>Last Active</th>
+                    <th class="col-lg-2" ng-click="appusers.setOrder('-stats.translated')"># Translations</th>
+                    <th class="col-lg-2">Engagement</th>
+                    <th class="col-lg-2">Translation Quality</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in appusers.users | orderBy:appusers.orderby | filter:appusers.filter">
+                        <td>
+                            <strong>{{user.userid}}</strong>
+                        </td>
+                        <td>
+                            {{ appusers.timestr( user.created_at ) }}<br/>
+                            {{ appusers.timestr( user.last_activity ) }}
+                        </td>
+                        <td>
+                            {{ user.stats.translated }}
+                        </td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{{ engagement = ((100 * user.stats.received) / user.stats.served) }}" aria-valuemin="0" aria-valuemax="100" ng-class="{'progress-bar-success':engagement>80,'progress-bar-warning':engagement<=80}" style="width: {{engagement}}%;" >
+                                    <div class="indication">{{ engagement | number:0 }}%</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{{ quality = ((100 * user.stats.approved) / user.stats.translated) }}" aria-valuemin="0" aria-valuemax="100" ng-class="{'progress-bar-success':quality>80,'progress-bar-warning':quality<=80}" style="width: {{quality}}%;" >
+                                    <div class="indication">{{ quality | number:0 }}%</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

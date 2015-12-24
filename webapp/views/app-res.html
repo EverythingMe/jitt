@@ -1,0 +1,224 @@
+<div class="container">
+    <div class="header">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="#/">
+                <img role="jitt-logo" src="images/jitt-logo.png"/>
+            </a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="js-navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a>Resources</a></li>
+                <li><a href="#/users/{{appres.apikey}}">Users</a></li>
+                <li><a href="#/status/{{appres.apikey}}">Status</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <a href="#/my-apps">&lt; Back to My Apps</a> <h3>{{appres.app.name}}</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div ng-show="appres.files.length > 0">
+                <div class="list-group" role="group" style="width:100%">
+                    <a class="list-group-item" ng-class="{active: file===appres.selectedFile}" ng-repeat="file in appres.files | orderBy:'name'" ng-click="appres.selectFile(file)">
+                        <small ng-bind-html="file.abridgedpath"></small><br/>
+                        <strong>{{file.filename}}</strong> &mdash; {{file.num}} resource(s)
+                        &nbsp;&nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-chevron-right" style="float:right"></span>
+                    </a>
+                </div>
+            </div>
+            <div ng-hide="appres.files.length>0">
+                <h3>No files here yet...</h3>
+                <p>If you didn't add your string resources to JITT, this is the time to do so!</p>
+                <p>First download <strong>jitter</strong> via <code>pip</code>. Then follow the instructions described in our <a href="https://github.com/EverythingMe/jitter#translation-flow">docs</a>.</p>
+                <p>If you already uploaded your strings, just hold on tight - <br/>it might take a few minutes for the upload to complete.</p>
+            </div>
+            <br/>
+        </div>
+        <div class="col-lg-8">
+
+            <div class="row" ng-show="appres.locales !== null &amp;&amp; appres.locales.length>0">
+                <div class="form-inline">
+                    <label>Selected Locale:</label><span> <strong>{{ appres.selectedLocale.engname }}</strong> ({{ (100 * appres.selectedLocale.num) / appres.num | number:0 }}% translated)</span>
+                    <span class="dropdown">
+                        <button class="btn btn-default btn-xs dropdown-toggle" type="button" id="localeMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="localeMenu">
+                            <li ng-repeat="locale in appres.locales" ng-class="{'active':(locale === appres.selectedLocale)}">
+                                <a role="button" ng-click="appres.setLocale(locale)">
+                                    {{ locale.engname }}
+                                    <small>({{ (100 * locale.num) / appres.num | number:0 }}%)</small>
+                                </a>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-inline">
+                    <label>Search resources: </label>
+                    <div class="form-group">
+                        <input type="search" class="form-control input-sm" ng-model="appres.filter"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-horizontal">
+                    <div class="form-group col-sm-4">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="appres.filterUnclear"/>
+                                    Show unclear items
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group  col-sm-4">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="appres.filterSkipped"/>
+                                    Show skipped items
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group  col-sm-4">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="appres.filterVerified"/>
+                                    Show verified items
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+
+            <div class="row" role="loading" ng-if="appres.files.length>0 &amp;&amp; appres.selectedFileResources === null"></div>
+            <div class="row" ng-repeat="res in appres.selectedFileResources | filter:appres.filter | orderBy:'-weight'">
+                <div class="panel panel-default"
+                     ng-show="(!appres.filterUnclear || (res.stats.unclear > 0)) &amp;&amp; (!appres.filterSkipped || (res.stats.skipped > 0)) &amp;&amp; (!appres.filterVerified || (res.verified))">
+                    <div class="panel-heading" ng-click="appres.selectResource(res)">
+                        <div>
+                            <small>{{res.text}}</small>
+                        </div>
+                        <div>
+                            <strong ng-repeat="suggestion in (orderedSuggestions = res.suggestions | orderBy:'score':true ) | limitTo:1">
+                                {{suggestion.text}}
+                            </strong>
+                            <strong ng-show="orderedSuggestions.length === 0">&lt;missing&gt;</strong>
+                        </div>
+                    </div>
+                    <div class="panel-body" ng-show="res === appres.selectedResource">
+                        <form class="form-horizontal">
+                          <div class="form-group">
+                            <label class="col-sm-2 control-label">id</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static">{{res.resource_id}}</p>
+                            </div>
+                            <label class="col-sm-2 control-label">Priority</label>
+                            <div class="col-sm-1">
+                                <p class="form-control-static">{{res.priority}}</p>
+                            </div>
+                            <label class="col-sm-2 control-label">Weight</label>
+                            <div class="col-sm-1">
+                                <p class="form-control-static">{{res.weight | number:2}}</p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-sm-2 control-label">Context</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static" ng-show="res.context.length > 0">{{res.context}}</p>
+                                <p class="form-control-static" ng-hide="res.context.length > 0"><i>None provided</i></p>
+                            </div>
+                          </div>
+                          <div class="alert alert-warning" ng-show="orderedSuggestions.length === 0">
+                              No suggested translations yet
+                          </div>
+                          <table class="table" ng-show="orderedSuggestions.length > 0">
+                              <thead>
+                                  <th>Suggested Translations:</th>
+                                  <th>Score</th>
+                                  <th></th>
+                                  <th></th>
+                              </thead>
+                              <tr ng-repeat="sugg in orderedSuggestions">
+                                  <td>{{sugg.text}}</td>
+                                  <td>
+                                      <div class="progress" ng-hide="done">
+                                          <div class="progress-bar" role="progressbar" aria-valuenow="{{ score_pct = (sugg_score > 0 ? 10 * sugg.score : 0) }}" aria-valuemin="0" aria-valuemax="100" ng-class="{'progress-bar-success':score_pct>50,'progress-bar-warning':score_pct<=50}" style="width: {{score_pct}}%;" >
+                                              <div class="score-indication">{{ sugg.score | number:2 }}</div>
+                                          </div>
+                                      </div>
+
+                                  </td>
+                                  <td>
+                                      <span ng-show="sugg.flagged>0">
+                                          <span style="color:red" class="glyphicon glyphicon-warning-sign"></span>
+                                          <a class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span></a>
+                                      </span>
+                                  </td>
+                                  <td>
+                                      <a ng-show="sugg.locale === appres.selectedLocale" class="btn btn-default btn-xs" ng-click="appres.selectSuggestion(sugg)" data-toggle="modal" data-target="#deleteSuggestionModal"><span class="glyphicon glyphicon-trash"></span></a>
+                                  </td>
+                              </tr>
+                          </table>
+                          <hr/>
+                          <button type="submit" style="float:right" class="btn btn-danger" data-toggle="modal" data-target="#deleteResourceModal"><span class="glyphicon glyphicon-trash"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteResourceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Are you sure?</h4>
+          </div>
+          <div class="modal-body">
+            <p>We can remove this resource from the server, but next time you upload your strings it will show up again...</p>
+            <p>It's better to add a <code>translatable='false'</code> attribute to your resource file to prevent this string from being uploaded.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Back to safety</button>
+            <button type="button" class="btn btn-danger" ng-click="appres.delete()">Yes, Delete {{appres.selectedResource.resource_id}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="deleteSuggestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Are you sure?</h4>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to remove this suggested translation?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Back to safety</button>
+            <button type="button" class="btn btn-danger" ng-click="appres.deleteSuggestion()">Yes, Delete "{{appres.selectedSuggestion.text}}"</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>

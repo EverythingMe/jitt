@@ -1,0 +1,60 @@
+application: jitt-v2
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+instance_class: F4
+
+handlers:
+
+# Admin API
+- url: /api/admin/.*
+  script: admin.app
+
+# Cached Queries API
+- url: /api/tasks/refresh
+  script: cached_query_manager.app
+  login: admin
+
+# Upload API
+- url: /api/tasks/upload-resource
+  script: upload.app
+  login: admin
+
+- url: /api/tasks/upload-resources
+  script: upload.app
+  login: admin
+
+- url: /api/upload/*
+  script: upload.app
+
+- url: /api/download/*
+  script: upload.app
+
+# Translation API
+- url: /api/.*
+  script: main.app
+
+- url: /tasks/rescore/.*
+  script: main.app
+  login: admin
+
+# Static Serving
+
+- url: /dev/
+  static_files: dist.dev/index.html
+  upload: dist.dev/index.html
+- url: /dev/(.+)
+  static_files: dist.dev/\1
+  upload: dist.dev/
+
+- url: /
+  static_files: dist/index.html
+  upload: dist/index.html
+- url: /(.+)
+  static_files: dist/\1
+  upload: dist/
+
+libraries:
+- name: webapp2
+  version: "2.5.2"
